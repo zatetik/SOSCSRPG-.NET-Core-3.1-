@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         FontSize="11pt"
         Title="My Awesome Game" Height="768" Width="1024">
+    
+    <!-- Built-in function. Checks if bool is true, Visibility is set to visible; else set to hidden 
+         'BooleanToVisibility' is a key we named to check the boolean -->
+    
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    </Window.Resources>
+    
     <Grid>
         <!-- RowDefinitions and ColumnDefinitions format each row and column
              If not, all the text in Content will be smooshed together. -->
@@ -59,10 +67,11 @@
             <Label Grid.Row="5" Grid.Column="0" Content="Level:"/>
             <Label Grid.Row="5" Grid.Column="1" Content="{Binding CurrentPlayer.Level}"/>
 
+            <!--
             <Button Grid.Row="6" Grid.Column="1" Content="Add XP" Click="ButtonBase_OnClick"></Button>
+            -->
         </Grid>
         
-        <Label Grid.Row="1" Grid.Column="1" Content="Game Data" Background="Beige"/>
         <Grid Grid.Row="1" Grid.Column="1" Background="Beige">
             <Grid.RowDefinitions>
                 <!-- Equal amount of space divided up between all rows defined -->
@@ -102,7 +111,56 @@
             </Border>
         </Grid>
         <Label Grid.Row="2" Grid.Column="0" Content="Inventory/Quests" Background="BurlyWood"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="Combat/Movement Controls" Background="Lavender"/>
+        
+        <Grid Grid.Row="2" Grid.Column="1"
+              Background="Lavender">
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="255"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Arrow Buttons -->
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Click attribute, enter the name of the funtion to run. Do not put
+                    parenthesis () since it is waiting for the Click to run the command -->
+                <Button Grid.Row="0" Grid.Column="1" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveNorth"
+                        Visibility="{Binding HasLocationToNorth, Converter={StaticResource BooleanToVisibility}}"
+                        Content="North"/>
+                <Button Grid.Row="1" Grid.Column="0" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveWest"
+                        Visibility="{Binding HasLocationToWest, Converter={StaticResource BooleanToVisibility}}"
+                        Content="West"/>
+                <Button Grid.Row="1" Grid.Column="2" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveEast"
+                        Visibility="{Binding HasLocationToEast, Converter={StaticResource BooleanToVisibility}}"
+                        Content="East"/>
+                <Button Grid.Row="2" Grid.Column="1" 
+                        Height="25" Width="65" Margin="10" 
+                        Click="OnClick_MoveSouth"
+                        Visibility="{Binding HasLocationToSouth, Converter={StaticResource BooleanToVisibility}}"
+                        Content="South"/>
+            </Grid>
+        </Grid>
 
     </Grid>
 </Window>

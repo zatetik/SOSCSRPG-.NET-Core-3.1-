@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
 
@@ -74,6 +75,13 @@ namespace Engine.Models
             }
         }
 
+        // Like a list, but...
+        // automatically handles notifications, don't have to OnPropertyChanged()
+        public ObservableCollection<GameItem> Inventory { get; set; }
+        public Player()
+        {
+            Inventory = new ObservableCollection<GameItem>();
+        }
         
     }
 }

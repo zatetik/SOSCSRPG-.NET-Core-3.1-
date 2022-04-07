@@ -47,6 +47,9 @@ namespace Engine.Factories
                 "You see a small hut, with plants drying from the roof.",
                 "pack://application:,,,/Engine;component/Images/Locations/HerbalistsHut.png");
 
+            //LocationAt() returns a Location, and since we added a List<Location> we can add a quest here
+            newWorld.LocationAt(0, 1).QuestsAvailableHere.Add(QuestFactory.GetQuestByID(1));
+            
             newWorld.AddLocation(0, 2, "Herbalist's garden",
                 "There are many plants here, with snakes hiding behind them.",
                 "pack://application:,,,/Engine;component/Images/Locations/HerbalistsGarden.png");

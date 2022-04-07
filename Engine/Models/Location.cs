@@ -16,5 +16,8 @@ namespace Engine.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public string ImageName { get; set; }
+
+        //don't have to initialize the List in a constructor if done here
+        public List<Quest> QuestsAvailableHere { get; set; } = new List<Quest>();
     }
 }

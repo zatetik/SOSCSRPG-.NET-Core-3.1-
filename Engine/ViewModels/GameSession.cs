@@ -10,7 +10,11 @@ namespace Engine.ViewModels
 {
     public class GameSession : BaseNotificationClass
     {
+        // private backing variables are here so that we can use PropertyNotifications
+        // and notify if the values inside the variables changed
+
         private Location _currentLocation;
+        private Monster _currentMonster;
         public World CurrentWorld { get; set; }
         public Player CurrentPlayer { get; set; }
         public Location CurrentLocation 
@@ -26,9 +30,21 @@ namespace Engine.ViewModels
                 OnPropertyChanged(nameof(HasLocationToSouth));
 
                 GivePlayerQuestsAtLocation();
+                GetMonsterAtLocation();
             } 
         }
 
+        public Monster CurrentMonster 
+        {   get { return _currentMonster; }
+            set 
+            { 
+                _currentMonster = value;
+
+                OnPropertyChanged(nameof(CurrentMonster));
+                // boolean, similar to HasLocationNorth/South/East/West
+                OnPropertyChanged(nameof(HasMonster));
+            } 
+        }
         public bool HasLocationToNorth
         {
             // evaluates as true or false
@@ -59,6 +75,9 @@ namespace Engine.ViewModels
                                               CurrentLocation.YCoordinate - 1) != null;
             }
         }
+
+        // => is an expression body, similar to keyword 'return'
+        public bool HasMonster => CurrentMonster != null;
         public GameSession()
         {
             CurrentPlayer = new Player
@@ -123,6 +142,11 @@ namespace Engine.ViewModels
                     CurrentPlayer.Quests.Add(new QuestStatus(quest));
                 }
             }
+        }
+
+        private void GetMonsterAtLocation()
+        {
+            CurrentMonster = CurrentLocation.GetMonster();
         }
 
        

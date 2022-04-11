@@ -5,11 +5,14 @@ using Engine.Models;
 using Engine.Factories;
 using System.ComponentModel;
 using System.Linq;
+using Engine.EventArgs;
 
 namespace Engine.ViewModels
 {
     public class GameSession : BaseNotificationClass
     {
+        public event EventHandler<GameMessageEventArgs> OnMessageRaised;
+
         // private backing variables are here so that we can use PropertyNotifications
         // and notify if the values inside the variables changed
 
@@ -43,6 +46,12 @@ namespace Engine.ViewModels
                 OnPropertyChanged(nameof(CurrentMonster));
                 // boolean, similar to HasLocationNorth/South/East/West
                 OnPropertyChanged(nameof(HasMonster));
+
+                if(CurrentMonster != null)
+                {
+                    RaiseMessage("");
+                    RaiseMessage($"You see a {CurrentMonster.Name} here!");
+                }
             } 
         }
         public bool HasLocationToNorth
@@ -149,6 +158,10 @@ namespace Engine.ViewModels
             CurrentMonster = CurrentLocation.GetMonster();
         }
 
-       
+       private void RaiseMessage(string message)
+        {
+            OnMessageRaised?.Invoke(this, new GameMessageEventArgs(message));
+        }
+
     }
 }

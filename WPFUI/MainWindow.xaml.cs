@@ -32,8 +32,18 @@ namespace WPFUI
 
             _gameSession = new GameSession();
 
+            // Add OnGameMessageRaised to the event OnMessageRaised
+            _gameSession.OnMessageRaised += OnGameMessageRaised;
+
             // DataContext is built-in; XAML file will use the object in the UI
             DataContext = _gameSession;
+        }
+
+        private void OnGameMessageRaised(object sender, Engine.EventArgs.GameMessageEventArgs e)
+        {
+            // in MainWindow.xaml, add a new Block with the message tagged as GameMessages (found in .xaml file)
+            GameMessages.Document.Blocks.Add(new Paragraph(new Run(e.Message)));
+            GameMessages.ScrollToEnd();
         }
 
         private void OnClick_MoveNorth(object sender, RoutedEventArgs e)

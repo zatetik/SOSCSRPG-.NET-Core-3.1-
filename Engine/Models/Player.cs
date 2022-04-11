@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 
 namespace Engine.Models
@@ -78,11 +79,24 @@ namespace Engine.Models
         // Like a list, but...
         // automatically handles notifications, don't have to OnPropertyChanged()
         public ObservableCollection<GameItem> Inventory { get; set; }
+
+        // link statement, using a where clause instead of get/set
+        // this is called Deferred Execution. ToList() forces it to be executed
+        // it normally executes only when it is needed, but ToList() forces it
+        public List<GameItem> Weapons =>
+            Inventory.Where(i => i is Weapon).ToList();
         public ObservableCollection<QuestStatus> Quests { get; set; }
         public Player()
         {
             Inventory = new ObservableCollection<GameItem>();
             Quests = new ObservableCollection<QuestStatus>();
+        }
+
+        public void AddItemToInventory(GameItem item)
+        {
+            Inventory.Add(item);
+
+            OnPropertyChanged(nameof(Weapons));
         }
         
     }

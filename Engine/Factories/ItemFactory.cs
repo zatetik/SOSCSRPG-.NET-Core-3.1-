@@ -36,7 +36,14 @@ namespace Engine.Factories
             GameItem standardItem = _standardGameItems.FirstOrDefault(item => item.ItemTypeID == itemTypeID);
             if(standardItem != null)
             {
+                if(standardItem is Weapon)
+                {
+                    // casting as weapon, note that this .Clone() is different
+                    // this is Weapon.Clone()
+                    return (standardItem as Weapon).Clone();
+                }
                 // cloning an object
+                // this is GameItem.Clone()
                 return standardItem.Clone();
             }
 

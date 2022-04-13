@@ -17,7 +17,7 @@ namespace Engine.Models
             loc.YCoordinate = yCoordinate;
             loc.Name = name;
             loc.Description = description;
-            loc.ImageName = imageName;
+            loc.ImageName = $"pack://application:,,,/Engine;component/Images/Locations/{imageName}";
 
             // add the new object to the list
             _locations.Add(loc);

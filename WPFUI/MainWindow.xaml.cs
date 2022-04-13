@@ -21,16 +21,14 @@ namespace WPFUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameSession _gameSession;
+        /* instantiates everything in GameSession
+            * this includes instantiation of values in player class CurrentPlayer
+            */
+
+        private readonly GameSession _gameSession = new GameSession();
         public MainWindow()
         {
             InitializeComponent();
-
-            /* instantiates everything in GameSession
-             * this includes instantiation of values in player class CurrentPlayer
-             */
-
-            _gameSession = new GameSession();
 
             // Add OnGameMessageRaised to the event OnMessageRaised
             _gameSession.OnMessageRaised += OnGameMessageRaised;

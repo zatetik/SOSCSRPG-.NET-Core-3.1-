@@ -15,12 +15,12 @@ namespace Engine.Factories
         // since this is a static class, there are no constructors because there is 'nothing' to construct
         // However, you can run this function the first time anyone uses anything in this class
 
-        private static List<GameItem> _standardGameItems;
+        // readonly: _standardGameItems can only be set in this line or in ItemFactory() constructor
+        // this protects us from setting the value somewhere else
+        private static readonly List<GameItem> _standardGameItems = new List<GameItem>();
 
         static ItemFactory()
         {
-            _standardGameItems = new List<GameItem>();
-
             _standardGameItems.Add(new Weapon(1001, "Pointy Stick", 1, 1, 2));
             _standardGameItems.Add(new Weapon(1002, "Rusty Sword", 5, 1, 3));
             _standardGameItems.Add(new GameItem(9001, "Snake fang", 1));
